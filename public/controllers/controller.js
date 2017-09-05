@@ -24,20 +24,43 @@ myApp.config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push('logTimeTaken');
 }]);
 
-myApp.controller('BacklogDataCtrl', function ($scope, $http, myService) {
+myApp.controller('BacklogDataCtrl', function ($scope, $http) {
     $http.get('/get/Backlogs').then(function (response) {
-        myService.update(response.data);
-        $scope.backlogsList = myService.getContent();
+        $scope.backlogsList = response.data;
     });
 
     $scope.test = function () {
         $http.post('/post/backlog', $scope.formData).then(function (response) {
-            myService.update(response.data);
             $scope.backlogsList = myService.getContent();
             $scope.time = response.config.responseTimestamp - response.config.requestTimestamp;
         });
     };
 });
+
+myApp.controller('NewTaskCtrl', function ($scope, $http ) {
+    $http.post('/get/NewTask').then(function (response) {
+        $scope.tasksList = response.data;
+    });
+
+    $scope.test = function () {
+        $http.post('/post/NewTask', $scope.formData).then(function (response) {
+            $scope.tasksList = response.data;
+        });
+    };
+});
+
+myApp.controller('editTask', function ($scope, $http ) {
+    $http.post('/get/editTask').then(function (response) {
+        $scope.editTask = response.data;
+    });
+
+    $scope.test = function () {
+        $http.post('/post/editTask', $scope.formData).then(function (response) {
+            $scope.editTask = response.data;
+        });
+    };
+});
+
 
 myApp.controller("TaskDataCtrl", function ($scope, $http) {
     $http.get('/get/Tasks').then(function (response) {
