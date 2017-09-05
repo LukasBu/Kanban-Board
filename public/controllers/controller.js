@@ -31,8 +31,9 @@ myApp.controller('BacklogDataCtrl', function ($scope, $http) {
 
     $scope.test = function () {
         $http.post('/post/backlog', $scope.formData).then(function (response) {
-            $scope.backlogsList = myService.getContent();
+            $scope.backlogsList = response.data;
             $scope.time = response.config.responseTimestamp - response.config.requestTimestamp;
+            $scope.recieved = true;
         });
     };
 });
