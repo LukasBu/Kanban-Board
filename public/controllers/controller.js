@@ -27,13 +27,13 @@ myApp.config(['$httpProvider', function($httpProvider) {
 myApp.controller('BacklogDataCtrl', function ($scope, $http) {
     $http.get('/get/Backlogs').then(function (response) {
         $scope.backlogsList = response.data;
+        $scope.recieved = true;
     });
 
     $scope.test = function () {
         $http.post('/post/backlog', $scope.formData).then(function (response) {
             $scope.backlogsList = response.data;
             $scope.time = response.config.responseTimestamp - response.config.requestTimestamp;
-            $scope.recieved = true;
         });
     };
 });
